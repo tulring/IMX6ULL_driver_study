@@ -1,0 +1,33 @@
+##pinctrl节点
+
+&iomuxc_snvs {
+	pinctrl-names = "default_snvs";
+	pinctrl-0 = <&pinctrl_hog_2>;
+	pinctrl-1 = <&pinctrl_key>;
+	pinctrl_hog_2: hoggrp-2 {
+		fsl,pins = <
+			MX6ULL_PAD_SNVS_TAMPER0__GPIO5_IO00      0x80000000
+		>;
+	};
+	pinctrl_key:keygrp {
+			fsl,pins = <
+				MX6ULL_PAD_SNVS_TAMPER1__GPIO5_IO01  0x80000000
+				
+			>;
+	};
+
+
+};
+
+##设备节点
+	key{
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "turing-key";
+		pinctrl-name = "default";
+		pinctrl-0 = <&pinctrl_key>;
+		key-gpio = <&gpio5 1 GPIO_ACTIVE_LOW >;
+		interrupt-parent = <&gpio5>;
+		interrupts = <1 IRQ_TYPE_EDGE_BOTH>;
+		status = "okay";
+	};
